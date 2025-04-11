@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h2>Iniciar sesión</h2>
+  <form method="POST" action="/login/">
+    <input
+      type="text"
+      name="correo"
+      placeholder="Correo electrónico"
+      required
+    /><br /><br />
+    <input type="password" name="clave" placeholder="Contraseña" required />
+    <div>
+      <form>
+        <button type="submit">Entrar</button>
+      </form>
+      <p>¿Olvidaste tu contraseña? <a href="/recuperar">Haz clic aquí</a></p>
+
+      {% with mensajes = get_flashed_messages() %} {% if mensajes %}
+      <p style="color: red">{{ mensajes[0] }}</p>
+      {% endif %} {% endwith %}
+    </div>
+    {% endblock %}
+  </form>
+</div>
