@@ -14,6 +14,9 @@ def principal():
 
 @app.route("/agregarsena/",methods=['GET', 'POST'])
 def addGenero():
+    if 'instructor_id' not in session:
+        flash('Debes iniciar sesión para realizar esta acción', 'warning')
+        return redirect(url_for('login'))
     try:
         mensaje=None
         estado=False

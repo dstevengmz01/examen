@@ -22,7 +22,11 @@
             <td>{{ guia.nombreguia }}</td>
             <td>{{ guia.descripcions }}</td>
             <td>{{ guia.programaformacion }}</td>
-            <td>{{ guia.documento }}</td>
+            <td>
+              <a href="{{ url_for('download_file', filename=guia.documento) }}" target="_blank">
+                <button type="button">Ver PDF</button>
+              </a>
+            </td>
             <td>{{ guia.fecha }}</td>
             <td>{{ guia.intructordeproceso.nombrecompleto }}</td>
           </tr>

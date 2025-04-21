@@ -30,8 +30,8 @@ def agregar_instructor():
                 nuevo_instructor.set_password(password)
                 nuevo_instructor.save()
                 correo_destino = nuevo_instructor.correoelectronico
-                asunto = "Inicio de sesión exitoso"
-                mensaje = f"{password}"
+                asunto = "Contraseña de la App "
+                mensaje = f"Su contraseña es: {password} su correo es: {correo}"
                 enviar_correo_asincrono(correo_destino, asunto, mensaje)
                 estado = True
                 mensaje = "Instructor agregado correctamente. La contraseña ha sido enviada al correo."

@@ -20,16 +20,18 @@
         <a class="nav-link" href="/login">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/agregarinstructor/">Agregar Instructor</a>
+        <a class="nav-link" href="/agregarinstructor/">Registrarse Agregar Instructor</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/agregarguia">Agregar Guia</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/registrar">Registrar Usuario</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="/listarguia">Listar Guias</a>
+      </li>
+      <li>
+        <form action="{{ url_for('logout') }}" method="get">
+          <button type="submit">Cerrar sesión</button>
+        </form>
       </li>
     </ul>
   </div>

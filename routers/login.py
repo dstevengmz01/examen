@@ -4,6 +4,7 @@ from models.intructor import NombreIntructor
 from app import app
 from correo import enviar_correo_asincrono
 import requests
+from flask import session
 
 bcrypt = Bcrypt(app)
 
@@ -18,7 +19,7 @@ def login():
             session.permanent = True
             flash('Inicio de sesión exitoso.', 'success')
             asunto = "Inicio de sesión exitoso"
-            mensaje = f"Hola {instructor.nombrecompleto}, has iniciado sesión correctamente."
+            mensaje = f"Has iniciado sesión correctamente, {str(instructor.nombrecompleto)}."
             enviar_correo_asincrono(instructor.correoelectronico, asunto, mensaje)
             return redirect(url_for('principal'))
         else:
@@ -26,3 +27,11 @@ def login():
             return redirect(url_for('login'))
 
     return render_template('login.html')
+
+
+#cerrar sesión
+@app.route('/logout')
+def logout():
+    session.pop('instructor_id', None)
+    flash('¡Has cerrado sesión!', 'info')
+    return redirect(url_for('login'))
