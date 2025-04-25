@@ -1,6 +1,7 @@
 from flask import render_template, request,send_from_directory,session,redirect,url_for,flash
 from models.guia import NombreGuia
 from models.intructor import NombreIntructor
+from models.programa import NombrePrograma
 from app import app
 from werkzeug.utils import secure_filename
 import os
@@ -24,6 +25,8 @@ def listar_guias():
         guias = NombreGuia.objects()
         return render_template("listarguia.html", guias=guias)
 
+
+
 @app.route("/agregarguia", methods=['GET', 'POST'])
 def agregar_guia():
     if 'instructor_id' not in session:
@@ -34,6 +37,7 @@ def agregar_guia():
         mensaje = None
         estado = False
         instructores = NombreIntructor.objects()
+        programa = NombrePrograma.objects()
         if request.method == 'POST':
             try:
                 if 'documento' not in request.files:
@@ -49,7 +53,8 @@ def agregar_guia():
                     documento.save(filepath)
                     nombreguia = request.form.get("nombreguia")
                     descripcions = request.form.get("descripcions")
-                    programaformacion = request.form.get("programaformacion")
+                    programa_id = request.form.get("programaformacion")
+                    programa_ref = NombrePrograma.objects(id=programa_id).first()
                     fecha = request.form.get("fecha")
                     instructor_id = request.form.get("intructordeproceso")
                     instructor_ref = NombreIntructor.objects(id=instructor_id).first()
@@ -57,7 +62,8 @@ def agregar_guia():
                         nueva_guia = NombreGuia(
                             nombreguia=nombreguia,
                             descripcions=descripcions,
-                            programaformacion=programaformacion,
+                            programaformacion=programa_ref.nombre,
+                            programa=programa_ref,
                             documento=filename,
                             fecha=fecha,
                             intructordeproceso=instructor_ref
@@ -74,7 +80,7 @@ def agregar_guia():
                 print("Error real al guardar la guía:")
                 traceback.print_exc()
                 mensaje = f"Error al guardar la guía: {str(e)}"
-        return render_template("agregarguia.html", mensaje=mensaje, estado=estado, instructores=instructores)
+        return render_template("agregarguia.html", mensaje=mensaje, estado=estado, instructores=instructores,programa=programa)
 
 
 @app.route('/uploads/pdf/<path:filename>')
